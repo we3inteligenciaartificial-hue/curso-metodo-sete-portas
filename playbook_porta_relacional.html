@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook — Porta Relacional · Método Sete Portas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #7A5C10;
+  --gold-mid: #9A7820;
+  --gold-light: #C4A84A;
+  --gold-pale: #F0E8CC;
+  --cream: #FAF7F0;
+  --warm-white: #FDFBF7;
+  --parchment: #F2ECD8;
+  --ink: #1A120A;
+  --ink-mid: #3D3020;
+  --ink-soft: #6B5840;
+  --ink-pale: #9A8A70;
+  --black: #0A0806;
+  --rule: #D8CEB0;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', sans-serif;
+}
+
+@page { size: A4; margin: 0; }
+html { background: #DDD8CC; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  min-height: 100vh;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* MASTHEAD */
+.masthead {
+  background: var(--black);
+  padding: 2rem 2.5rem 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid var(--gold);
+}
+
+.series-tag {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.masthead h1 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #FFF;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.masthead h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold-light);
+}
+
+.porta-badge {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  padding: 6px 12px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.author-line {
+  font-family: var(--serif);
+  font-size: 12px;
+  color: #888;
+  margin-top: 6px;
+  font-style: italic;
+  text-align: right;
+}
+
+/* GRID */
+.body-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--rule);
+}
+
+.cell {
+  background: var(--warm-white);
+  padding: 1.25rem 1.5rem;
+}
+
+.cell.full { grid-column: 1 / -1; }
+.cell.accent { background: var(--black); }
+.cell.gold-bg { background: var(--parchment); }
+.cell.sage { background: #F4F7F0; }
+
+.sec-tag {
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  border-left: 2px solid var(--gold);
+  padding-left: 8px;
+  margin-bottom: 0.65rem;
+  display: block;
+}
+
+.cell.accent .sec-tag {
+  color: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+/* OBJETIVO */
+.objetivo-text {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* PRINCÍPIO */
+.principio-text {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: #FFF;
+  font-style: italic;
+}
+
+.principio-text strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--gold-light);
+}
+
+/* CASO EMBLEMA */
+.caso-box {
+  background: #1A0E06;
+  border-left: 3px solid var(--gold-light);
+  padding: 0.9rem 1rem;
+  margin-top: 0.75rem;
+}
+
+.caso-tag {
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.caso-text {
+  font-size: 11px;
+  color: #CCC;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* FRAMEWORK */
+.framework-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 0.25rem;
+}
+
+.fw-step {
+  flex: 1;
+  background: var(--parchment);
+  border: 0.5px solid var(--rule);
+  padding: 0.75rem 0.6rem;
+  text-align: center;
+  position: relative;
+}
+
+.fw-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 14px;
+  z-index: 2;
+  background: var(--warm-white);
+  padding: 0 2px;
+}
+
+.fw-num {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.fw-name {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.fw-desc {
+  font-size: 10px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* STEPS */
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 10px;
+  background: var(--cream);
+  border-left: 2px solid var(--rule);
+  transition: border-color 0.2s;
+}
+
+.step-item:hover { border-left-color: var(--gold); }
+
+.step-n {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 18px;
+}
+
+.step-action {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.step-focus {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* CHECKLIST */
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.45;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+
+.check-row:hover { background: var(--parchment); }
+.check-row input { display: none; }
+
+.cb {
+  width: 13px; height: 13px;
+  border: 1px solid var(--ink-pale);
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+
+.cb::after {
+  content: '';
+  width: 6px; height: 4px;
+  border-left: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: rotate(-45deg) scale(0);
+  margin-top: -2px;
+  transition: transform 0.15s;
+}
+
+.check-row input:checked ~ .cb { border-color: var(--gold); background: rgba(122,92,16,0.06); }
+.check-row input:checked ~ .cb::after { transform: rotate(-45deg) scale(1); }
+.check-row input:checked ~ span { color: var(--ink-pale); text-decoration: line-through; }
+
+/* ERRO */
+.erro-box {
+  background: #FFF8F0;
+  border: 1px solid #E8C88A;
+  border-left: 3px solid #C07800;
+  padding: 0.9rem 1rem;
+}
+
+.erro-tag {
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C07800;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.erro-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.erro-lines {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.erro-lines span {
+  display: block;
+  padding-left: 12px;
+  position: relative;
+}
+
+.erro-lines span::before {
+  content: '·';
+  position: absolute;
+  left: 3px;
+  color: #C07800;
+}
+
+/* APLICAÇÃO */
+.aplicacao-box {
+  background: var(--gold-pale);
+  border: 1px solid #C8A840;
+  padding: 1rem 1.25rem;
+}
+
+.aplicacao-label {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.aplicacao-action {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.aplicacao-detail {
+  font-size: 11.5px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+
+/* FRASE FINAL */
+.frase-bar {
+  background: var(--black);
+  border-top: 2px solid var(--gold);
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.frase-text {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #FFF;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.frase-text strong {
+  font-style: normal;
+  color: var(--gold-light);
+}
+
+.frase-sig {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--gold-light);
+  font-style: italic;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.frase-sig small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  font-style: normal;
+  color: #666;
+  margin-top: 3px;
+}
+
+/* PRINT */
+.print-bar {
+  background: var(--cream);
+  border-top: 0.5px solid var(--rule);
+  padding: 0.75rem 2.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-print {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: none;
+  border: 0.5px solid var(--rule);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-print:hover { border-color: var(--gold); color: var(--gold); }
+
+@media print {
+  html { background: #fff; }
+  .print-bar { display: none; }
+  body { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div>
+    <div class="series-tag">Método Sete Portas · Playbook Executivo · Aula 03</div>
+    <h1>Playbook Estratégico<br><em>da Porta Relacional</em></h1>
+  </div>
+  <div>
+    <div class="porta-badge">Porta 03 · Relacional</div>
+    <div class="author-line">Dra. Eunice Schlieck · OAB SC 15.308-B</div>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <!-- OBJETIVO -->
+  <div class="cell">
+    <span class="sec-tag">Objetivo da aula</span>
+    <p class="objetivo-text">
+      Aprender a mapear as relações envolvidas no conflito e conduzir o caso preservando vínculos que importam além do CNPJ ou do processo. Esta aula transforma o advogado em guardião das relações — não apenas dos direitos — gerando soluções mais duradouras, consensuais e humanamente superiores.
+    </p>
+  </div>
+
+  <!-- PRINCÍPIO + CASO -->
+  <div class="cell accent">
+    <span class="sec-tag">Princípio estratégico</span>
+    <p class="principio-text">
+      <strong>Por trás de todo CNPJ existem pessoas — e relações que valem mais do que qualquer sentença.</strong> O advogado que enxerga o vínculo humano no conflito empresarial ou familiar tem acesso a soluções que o processo jamais alcança.
+    </p>
+    <div class="caso-box">
+      <div class="caso-tag">Caso real · Dissolução societária entre irmãos</div>
+      <p class="caso-text">Dois irmãos e sócios em conflito. A filha de um chamou o outro de padrinho. O advogado usou esse momento para resgatar a confiança — e a dissolução foi resolvida em consenso. Saíram combinando um churrasco.</p>
+    </div>
+  </div>
+
+  <!-- FRAMEWORK -->
+  <div class="cell full">
+    <span class="sec-tag">Framework prático · Método MPCR</span>
+    <div class="framework-flow">
+      <div class="fw-step">
+        <div class="fw-num">01</div>
+        <div class="fw-name">Mapear</div>
+        <div class="fw-desc">Identifique todos os vínculos envolvidos: familiares, societários, afetivos</div>
+      </div>
+      <div class="fw-step">
+        <div class="fw-num">02</div>
+        <div class="fw-name">Perguntar</div>
+        <div class="fw-desc">Questione o que a relação representa além do conflito — o que há de valor ali</div>
+      </div>
+      <div class="fw-step">
+        <div class="fw-num">03</div>
+        <div class="fw-name">Calibrar</div>
+        <div class="fw-desc">Escolha a via que resolve o jurídico sem destruir o que ainda pode ser preservado</div>
+      </div>
+      <div class="fw-step">
+        <div class="fw-num">04</div>
+        <div class="fw-name">Resolver</div>
+        <div class="fw-desc">Conduza a dissolução ou acordo de forma consensual, preservando a relação essencial</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASSO A PASSO -->
+  <div class="cell">
+    <span class="sec-tag">Passo a passo operacional</span>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <div class="step-action">Mapeie quem está envolvido além das partes formais</div>
+          <div class="step-focus">Foco: familiares, parceiros, dependentes — quem será afetado indiretamente</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <div class="step-action">Pergunte: "Existe alguma relação aqui que você quer preservar?"</div>
+          <div class="step-focus">Foco: abrir consciência do cliente para o que está além do conflito imediato</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <div class="step-action">Avalie se a via judicial vai destruir vínculos irrecuperáveis</div>
+          <div class="step-focus">Foco: o processo certo é o que resolve sem criar novos danos relacionais</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">4</div>
+        <div class="step-body">
+          <div class="step-action">Proponha ambiente de diálogo antes de acionar qualquer via formal</div>
+          <div class="step-focus">Foco: reunião, mediação ou negociação direta com as partes e famílias</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">5</div>
+        <div class="step-body">
+          <div class="step-action">Use o judicial apenas para homologar — não para iniciar o conflito</div>
+          <div class="step-focus">Foco: a sentença é o último recurso, não o primeiro instinto</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="cell gold-bg">
+    <span class="sec-tag">Checklist de implementação</span>
+    <div class="check-list">
+      <label class="check-row"><input type="checkbox"><div class="cb"></div><span>Mapeei todas as pessoas envolvidas além das partes formais do conflito</span></label>
+      <label class="check-row"><input type="checkbox"><div class="cb"></div><span>Identifiquei se há relações (família, sociedade, amizade) a preservar</span></label>
+      <label class="check-row"><input type="checkbox"><div class="cb"></div><span>Perguntei ao cliente o que ele quer preservar além do direito em disputa</span></label>
+      <label class="check-row"><input type="checkbox"><div class="cb"></div><span>Avaliei se a via judicial agrava ou resolve a relação no longo prazo</span></label>
+      <label class="check-row"><input type="checkbox"><div class="cb"></div><span>Propus ou considerei uma via consensual antes do ingresso judicial</span></label>
+      <label class="check-row"><input type="checkbox"><div class="cb"></div><span>Conduzi o atendimento saindo do automático — enxerguei o todo</span></label>
+    </div>
+  </div>
+
+  <!-- ERRO -->
+  <div class="cell">
+    <span class="sec-tag">Erro mais comum</span>
+    <div class="erro-box">
+      <div class="erro-tag">⚠ Atenção</div>
+      <div class="erro-title">Tratar uma dissolução familiar como se fosse só um contrato</div>
+      <div class="erro-lines">
+        <span>O advogado age no automático — propõe ação judicial sem mapear os vínculos</span>
+        <span>O processo resolve o jurídico e destrói o que era irreparável: a relação</span>
+        <span>O cliente "vence" o caso e perde o irmão, o sócio de anos, o padrinho da filha</span>
+        <span>Solução: antes da estratégia, pergunte o que não pode ser perdido nesse conflito</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- APLICAÇÃO -->
+  <div class="cell sage">
+    <span class="sec-tag">Aplicação imediata</span>
+    <div class="aplicacao-box">
+      <div class="aplicacao-label">Nas próximas 24 horas, faça isso:</div>
+      <div class="aplicacao-action">Pegue um caso ativo que envolva pessoas com vínculo além do jurídico. Pergunte ao cliente: "O que você quer que permaneça intacto quando isso acabar?"</div>
+      <div class="aplicacao-detail">A resposta vai revelar a Porta Relacional do caso — e provavelmente mudar a estratégia que você estava planejando. O que sobra depois do processo importa tanto quanto o que se conquista nele.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FRASE FINAL -->
+<div class="frase-bar">
+  <p class="frase-text">
+    <strong>Sair do automático é o diferencial do advogado multiportas.</strong> Em tempos de inteligência artificial, o que nenhum algoritmo replicará é a capacidade de perceber que, por trás de cada CNPJ, existe uma relação humana que merece ser preservada.
+  </p>
+  <div class="frase-sig">
+    Eunice Schlieck
+    <small>Método Sete Portas · 2025</small>
+  </div>
+</div>
+
+<div class="print-bar">
+  <button class="btn-print" onclick="window.print()">↓ Salvar / Imprimir PDF</button>
+</div>
+
+</body>
+</html>
