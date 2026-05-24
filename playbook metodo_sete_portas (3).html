@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Método Sete Portas — Checklist de Atendimento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #7A5C10;
+    --gold-light: #9A7820;
+    --gold-dim: #5E4610;
+    --black: #0A0A0A;
+    --white: #FFFFFF;
+    --gray-1: #0A0A0A;
+    --gray-2: #F7F3EC;
+    --gray-3: #E8E0D0;
+    --gray-4: #C8BFAA;
+    --gray-5: #7A6F5C;
+    --gray-6: #5A5040;
+    --gray-7: #2A221A;
+    --gray-8: #1A120A;
+    --bg-main: #F4F0E8;
+    --bg-card: #FDFBF7;
+    --text-main: #1A120A;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Jost', sans-serif;
+  }
+
+  body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .header {
+    background: #0A0A0A;
+    border-bottom: 0.5px solid #3A3A3A;
+    padding: 2.5rem 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+  }
+
+  .header-meta {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+
+  .header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: #AAAAAA;
+    letter-spacing: 0.05em;
+  }
+
+  .case-bar {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--gray-3);
+    padding: 1.25rem 3rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .case-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .case-field label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .case-field input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--gray-4);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 300;
+    padding: 4px 0;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  .case-field input:focus {
+    border-bottom-color: var(--gold);
+  }
+
+  .case-field input::placeholder { color: #AAA; }
+
+  .phase-row {
+    background: var(--bg-main);
+    border-bottom: 1px solid var(--gray-3);
+    padding: 0.75rem 3rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .phase-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-6);
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .phase-options {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .phase-opt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray-6);
+    transition: color 0.2s;
+  }
+
+  .phase-opt input[type="radio"] { display: none; }
+
+  .phase-dot {
+    width: 10px; height: 10px;
+    border: 1px solid var(--gray-5);
+    border-radius: 50%;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .phase-opt input:checked ~ .phase-dot {
+    border-color: var(--gold);
+    background: var(--gold);
+  }
+
+  .phase-opt:hover { color: var(--text-main); }
+
+  .main {
+    padding: 2rem 3rem 3rem;
+    max-width: 1100px;
+  }
+
+  .progress-section {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-6);
+    white-space: nowrap;
+    font-weight: 400;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--gray-3);
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-pct {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 400;
+    min-width: 32px;
+    text-align: right;
+  }
+
+  .portas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gray-3);
+    border: 1px solid var(--gray-3);
+    margin-bottom: 1px;
+  }
+
+  .porta-card {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .porta-card.activated {
+    background: #EFF5E8;
+  }
+
+  .porta-card.activated .porta-num {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .porta-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .porta-num {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--gray-4);
+    border: 0.5px solid var(--gray-4);
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    line-height: 1;
+  }
+
+  .porta-info { flex: 1; }
+
+  .porta-name {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  .porta-desc {
+    font-size: 12px;
+    color: var(--gray-5);
+    letter-spacing: 0.08em;
+    font-weight: 400;
+  }
+
+  .porta-score {
+    font-size: 13px;
+    color: var(--gray-5);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .porta-score span {
+    color: var(--gold);
+    font-weight: 500;
+    font-size: 13px;
+  }
+
+  .porta-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 2px;
+    transition: background 0.15s;
+  }
+
+  .check-item:hover { background: var(--gray-2); }
+
+  .check-item input[type="checkbox"] { display: none; }
+
+  .check-box {
+    width: 14px; height: 14px;
+    border: 0.5px solid var(--gray-5);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .check-box::after {
+    content: '';
+    width: 7px; height: 5px;
+    border-left: 1.5px solid var(--gold);
+    border-bottom: 1.5px solid var(--gold);
+    transform: rotate(-45deg) scale(0);
+    transition: transform 0.15s ease;
+    margin-top: -2px;
+  }
+
+  .check-item input:checked ~ .check-box {
+    border-color: var(--gold);
+    background: rgba(184, 155, 94, 0.08);
+  }
+
+  .check-item input:checked ~ .check-box::after {
+    transform: rotate(-45deg) scale(1);
+  }
+
+  .check-text {
+    font-size: 14px;
+    color: var(--gray-6);
+    line-height: 1.5;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+
+  .check-item input:checked ~ .check-box ~ .check-text {
+    color: #AAA;
+    text-decoration: line-through;
+    text-decoration-color: var(--gray-5);
+  }
+
+  .results-section {
+    background: var(--bg-card);
+    border: 1px solid var(--gray-3);
+    padding: 2rem;
+    margin-top: 1px;
+  }
+
+  .results-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--gray-3);
+  }
+
+  .results-title {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .results-divider { flex: 1; height: 0.5px; background: var(--gray-3); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .portas-ativadas h3 {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-6);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .porta-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .porta-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .porta-bar-name {
+    font-size: 13px;
+    color: var(--gray-6);
+    width: 80px;
+    flex-shrink: 0;
+    font-weight: 400;
+  }
+
+  .porta-bar-track {
+    flex: 1;
+    height: 3px;
+    background: var(--gray-3);
+    position: relative;
+  }
+
+  .porta-bar-fill {
+    height: 100%;
+    background: var(--gray-5);
+    transition: width 0.5s ease, background 0.3s;
+    width: 0%;
+  }
+
+  .porta-bar-fill.top { background: var(--gold); }
+
+  .porta-bar-pct {
+    font-size: 12px;
+    color: var(--gray-5);
+    width: 28px;
+    text-align: right;
+    font-weight: 400;
+  }
+
+  .porta-bar-item.top .porta-bar-name { color: var(--gold); }
+  .porta-bar-item.top .porta-bar-pct { color: var(--gold); }
+
+  .caminho-section h3 {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-6);
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+
+  .caminhos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .caminho-opt {
+    padding: 0.75rem;
+    border: 1px solid var(--gray-3);
+    font-size: 14px;
+    color: var(--gray-5);
+    cursor: default;
+    transition: all 0.3s;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .caminho-opt.recommended {
+    border-color: var(--gold);
+    color: var(--text-main);
+    background: rgba(122, 92, 16, 0.08);
+  }
+
+  .caminho-opt.recommended::before {
+    content: '→';
+    color: var(--gold);
+    margin-right: 6px;
+    font-size: 11px;
+  }
+
+  .caminho-indicator {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--gray-3);
+  }
+
+  .caminho-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-6);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .caminho-result {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--gold);
+    font-weight: 500;
+    min-height: 2rem;
+    transition: opacity 0.3s;
+  }
+
+  .caminho-reason {
+    font-size: 13px;
+    color: var(--gray-6);
+    margin-top: 6px;
+    line-height: 1.6;
+    min-height: 3em;
+  }
+
+  .reset-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-5);
+    background: none;
+    border: 1px solid var(--gray-4);
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 1.5rem;
+    font-weight: 400;
+  }
+
+  .reset-btn:hover {
+    color: var(--text-main);
+    border-color: var(--gray-5);
+  }
+
+  .footer {
+    border-top: 1px solid var(--gray-3);
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0A0A0A;
+  }
+
+  .footer-name {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: #C4A84A;
+    font-style: italic;
+  }
+
+  .footer-ref {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 700px) {
+    .header, .case-bar, .phase-row, .main, .footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .portas-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.8rem; }
+  }
+
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-5);
+    background: none;
+    border: 0.5px solid var(--gray-4);
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+  .print-btn:hover { color: var(--text-main); border-color: var(--gray-5); }
+
+  .obs-section {
+    background: #FDF8EE;
+    border: 1px solid var(--gray-3);
+    border-left: 2px solid var(--gold-dim);
+    padding: 1.5rem 2rem;
+    margin-top: 1px;
+  }
+  .obs-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+  .obs-icon { color: var(--gold); font-size: 14px; flex-shrink: 0; }
+  .obs-title { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 400; }
+  .obs-intro { font-size: 14px; color: var(--gray-6); margin-bottom: 0.75rem; line-height: 1.6; }
+  .obs-list { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
+  .obs-list li { font-size: 14px; color: var(--gray-6); line-height: 1.5; }
+  .obs-erro { font-size: 14px; color: var(--gray-6); line-height: 1.6; margin-bottom: 0.75rem; font-style: italic; }
+  .obs-final { font-size: 15px; color: var(--text-main); margin-bottom: 0.75rem; line-height: 1.5; }
+  .obs-final strong { font-weight: 500; color: var(--gold-light); }
+  .obs-dica { font-size: 12px; letter-spacing: 0.12em; color: var(--gray-5); border-top: 0.5px solid var(--gray-3); padding-top: 0.75rem; margin-top: 0.5rem; }
+
+
+  /* ─── FILTRO MULTIPORTAS ─── */
+  .filtro-section {
+    background: var(--bg-card);
+    border: 1px solid var(--gray-3);
+    border-left: 3px solid var(--gold);
+    padding: 1.25rem 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .filtro-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .filtro-icon {
+    width: 28px; height: 28px;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .filtro-title {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .filtro-subtitle {
+    font-size: 12px;
+    color: var(--gray-5);
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  .filtro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .filtro-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 10px;
+    background: #F7F3EC;
+    border: 1px solid var(--gray-3);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 1px;
+  }
+
+  .filtro-item:hover { background: var(--gold-pale, #F0E8CC); border-color: var(--gold); }
+  .filtro-item input { display: none; }
+
+  .filtro-cb {
+    width: 15px; height: 15px;
+    border: 1.5px solid var(--gray-4);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    background: #fff;
+  }
+
+  .filtro-cb::after {
+    content: '';
+    width: 7px; height: 5px;
+    border-left: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    transform: rotate(-45deg) scale(0);
+    margin-top: -2px;
+    transition: transform 0.15s;
+  }
+
+  .filtro-item input:checked ~ .filtro-cb {
+    border-color: var(--gold);
+    background: rgba(122, 92, 16, 0.07);
+  }
+
+  .filtro-item input:checked ~ .filtro-cb::after {
+    transform: rotate(-45deg) scale(1);
+  }
+
+  .filtro-item input:checked ~ .filtro-text {
+    color: var(--gray-4);
+    text-decoration: line-through;
+    text-decoration-color: var(--gray-4);
+  }
+
+  .filtro-text {
+    font-size: 13px;
+    color: var(--gray-6);
+    line-height: 1.45;
+    font-weight: 400;
+    transition: color 0.15s;
+  }
+
+  .filtro-alert {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0.85rem;
+    padding: 8px 12px;
+    background: #FBF5E6;
+    border: 1px solid #D4B860;
+    font-size: 11.5px;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .filtro-alert-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 700px) {
+    .filtro-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    .header, .case-bar, .phase-row, .main, .footer { padding-left: 1rem; padding-right: 1rem; }
+    .header { background: #fff; border-bottom: 1px solid #000; }
+    .header h1 { color: #000; }
+    .header::before { display: none; }
+    .porta-card { background: #fff; border: 1px solid #ddd; }
+    .print-btn, .reset-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-meta">Método Sete Portas · A Nova Advocacia</div>
+  <h1>Checklist de Atendimento</h1>
+  <div class="header-sub">Como decidir o caminho certo antes do processo &nbsp;·&nbsp; Use uma folha por atendimento &nbsp;·&nbsp; Não é roteiro fixo — é bússola</div>
+</div>
+
+<div class="case-bar">
+  <div class="case-field">
+    <label>Cliente / Caso</label>
+    <input type="text" placeholder="Nome ou referência do caso">
+  </div>
+  <div class="case-field" style="max-width: 140px;">
+    <label>Data</label>
+    <input type="text" id="dateField" placeholder="DD/MM/AAAA">
+  </div>
+  <div class="case-field">
+    <label>Advogado(a)</label>
+    <input type="text" placeholder="Nome do profissional">
+  </div>
+  <button class="print-btn" onclick="window.print()">↓ Imprimir</button>
+</div>
+
+<div class="phase-row">
+  <span class="phase-label">Fase:</span>
+  <div class="phase-options">
+    <label class="phase-opt"><input type="radio" name="fase" value="consulta"><div class="phase-dot"></div>Consulta inicial</label>
+    <label class="phase-opt"><input type="radio" name="fase" value="retorno"><div class="phase-dot"></div>Retorno</label>
+    <label class="phase-opt"><input type="radio" name="fase" value="decisao"><div class="phase-dot"></div>Decisão de caminho</label>
+    <label class="phase-opt"><input type="radio" name="fase" value="outro"><div class="phase-dot"></div>Outro</label>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- FILTRO MULTIPORTAS -->
+  <div class="filtro-section">
+    <div class="filtro-header">
+      <div class="filtro-icon">▼</div>
+      <div>
+        <div class="filtro-title">Filtro Multiportas — Antes de Analisar as Portas</div>
+        <div class="filtro-subtitle">Verifique sua postura de atendimento antes de identificar o caminho indicado</div>
+      </div>
+    </div>
+    <div class="filtro-grid">
+      <label class="filtro-item">
+        <input type="checkbox" class="filtro-check" onchange="updateFiltro()">
+        <div class="filtro-cb"></div>
+        <span class="filtro-text">Escutou sem antecipar conclusões</span>
+      </label>
+      <label class="filtro-item">
+        <input type="checkbox" class="filtro-check" onchange="updateFiltro()">
+        <div class="filtro-cb"></div>
+        <span class="filtro-text">Separou fatos de interpretações</span>
+      </label>
+      <label class="filtro-item">
+        <input type="checkbox" class="filtro-check" onchange="updateFiltro()">
+        <div class="filtro-cb"></div>
+        <span class="filtro-text">Identificou se sua percepção pessoal está interferindo na análise</span>
+      </label>
+      <label class="filtro-item">
+        <input type="checkbox" class="filtro-check" onchange="updateFiltro()">
+        <div class="filtro-cb"></div>
+        <span class="filtro-text">Evitou assumir o papel de salvador do conflito</span>
+      </label>
+      <label class="filtro-item">
+        <input type="checkbox" class="filtro-check" onchange="updateFiltro()">
+        <div class="filtro-cb"></div>
+        <span class="filtro-text">Manteve postura técnica, humana e estratégica</span>
+      </label>
+      <label class="filtro-item">
+        <input type="checkbox" class="filtro-check" onchange="updateFiltro()">
+        <div class="filtro-cb"></div>
+        <span class="filtro-text">Avaliou se possui condições adequadas para conduzir a demanda</span>
+      </label>
+    </div>
+    <div class="filtro-alert" id="filtroAlert" style="display:none;">
+      <div class="filtro-alert-dot"></div>
+      <span>Filtro completo — você está pronto para analisar as portas com clareza e assertividade.</span>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <span class="progress-label">Itens verificados</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+
+  <div class="portas-grid" id="portasGrid"></div>
+
+  <div class="results-section">
+    <div class="results-header">
+      <span class="results-title">Análise</span>
+      <div class="results-divider"></div>
+    </div>
+
+    <div class="two-col">
+      <div class="portas-ativadas">
+        <h3>Portas mais ativadas</h3>
+        <div class="porta-bars" id="portaBars"></div>
+      </div>
+
+      <div class="caminho-section">
+        <h3>Caminho indicado</h3>
+        <div class="caminhos-grid" id="caminhosGrid"></div>
+        <div class="caminho-indicator">
+          <div class="caminho-label">Recomendação</div>
+          <div class="caminho-result" id="caminhoResult">—</div>
+          <div class="caminho-reason" id="caminhoReason">Complete o checklist para obter a recomendação de caminho.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetAll()">↺ &nbsp;Novo Atendimento</button>
+  </div>
+
+  <div class="obs-section">
+    <div class="obs-header">
+      <span class="obs-icon">⚠</span>
+      <span class="obs-title">Atenção — Leia antes de usar o resultado</span>
+    </div>
+    <p class="obs-intro">Este checklist é uma bússola, não um GPS. O caminho indicado é uma sugestão baseada nos itens que você ativou — e pode ser impreciso se:</p>
+    <ol class="obs-list">
+      <li>Itens foram marcados sem verificação real do caso</li>
+      <li>Dados do cliente foram preenchidos incorretamente</li>
+      <li>Uma porta foi confundida com outra (ex: emocional × relacional)</li>
+      <li>O caso apresenta características excepcionais não captadas pelo instrumento</li>
+      <li>O profissional ainda não domina a lógica completa do Método Sete Portas</li>
+    </ol>
+    <p class="obs-erro">O erro aqui não é falha — é aprendizado. Perceber que ativou a porta errada é parte do processo de formação do olhar multiportas.</p>
+    <p class="obs-final"><strong>O julgamento final é sempre seu.</strong> Este instrumento apoia a decisão — nunca a substitui.</p>
+    <p class="obs-dica">Use uma folha por atendimento · Guarde como histórico · Compare casos ao longo do tempo</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-name">Eunice Schlieck · OAB SC 15.308-B</span>
+  <span class="footer-ref">Baseado na Cartilha da Advocacia Multiportas — OAB Nacional, 2025</span>
+</div>
+
+<script>
+const PORTAS = [
+  {
+    num: 1,
+    nome: "Porta Racional",
+    desc: "Fatos · Direitos · Riscos · Custos",
+    itens: [
+      "Analisou os fatos de forma objetiva",
+      "Explicou direitos e obrigações",
+      "Apresentou riscos, prazos e custos de cada via",
+      "Avaliou viabilidade técnica da demanda"
+    ],
+    caminhos: ["Ação judicial", "Arbitragem"],
+    peso: { judicial: 3, arbitragem: 3, negociacao: 1, mediacao: 1, conciliacao: 1, orientacao: 1 }
+  },
+  {
+    num: 2,
+    nome: "Porta Emocional",
+    desc: "O que o cliente sente sobre o conflito",
+    itens: [
+      "Reconheceu as emoções sem julgamento",
+      "Identificou: raiva / medo / luto / culpa",
+      "Validou sem se envolver emocionalmente",
+      "Avaliou se emoção impede decisão clara"
+    ],
+    caminhos: ["Mediação", "Orientação preventiva"],
+    peso: { judicial: 0, arbitragem: 0, negociacao: 1, mediacao: 3, conciliacao: 2, orientacao: 2 }
+  },
+  {
+    num: 3,
+    nome: "Porta Relacional",
+    desc: "Vínculos e impacto nas relações",
+    itens: [
+      "Mapeou todos os envolvidos no conflito",
+      "Verificou se relação precisa continuar",
+      "Avaliou impacto familiar ou profissional",
+      "Analisou histórico entre as partes"
+    ],
+    caminhos: ["Mediação", "Negociação direta"],
+    peso: { judicial: 0, arbitragem: 0, negociacao: 3, mediacao: 3, conciliacao: 1, orientacao: 1 }
+  },
+  {
+    num: 4,
+    nome: "Porta Simbólica",
+    desc: "O que está em jogo além do legal",
+    itens: [
+      "Perguntou o que o conflito representa",
+      "Identificou padrões de repetição",
+      "Descobriu o que o cliente realmente quer",
+      "Verificou questões de reconhecimento"
+    ],
+    caminhos: ["Mediação", "Orientação preventiva"],
+    peso: { judicial: 0, arbitragem: 0, negociacao: 1, mediacao: 3, conciliacao: 1, orientacao: 3 }
+  },
+  {
+    num: 5,
+    nome: "Porta Social",
+    desc: "Contexto coletivo · Poder · Vulnerab.",
+    itens: [
+      "Avaliou equilíbrio de poder entre as partes",
+      "Verificou acesso do cliente a recursos",
+      "Identificou vulnerabilidades relevantes",
+      "Considerou impacto social da decisão"
+    ],
+    caminhos: ["Conciliação", "Ação judicial"],
+    peso: { judicial: 2, arbitragem: 1, negociacao: 1, mediacao: 2, conciliacao: 3, orientacao: 1 }
+  },
+  {
+    num: 6,
+    nome: "Porta Contextual",
+    desc: "Momento de vida e timing adequado",
+    itens: [
+      "Avaliou urgência real da situação",
+      "Verificou fatos novos ou em andamento",
+      "Analisou o momento de vida do cliente",
+      "Definiu timing ideal para agir ou aguardar"
+    ],
+    caminhos: ["Negociação direta", "Orientação preventiva"],
+    peso: { judicial: 1, arbitragem: 1, negociacao: 2, mediacao: 1, conciliacao: 1, orientacao: 3 }
+  },
+  {
+    num: 7,
+    nome: "Porta Existencial",
+    desc: "Valores · Sentido · O que transcende",
+    itens: [
+      "Acolheu crenças e valores do cliente",
+      "Respeitou dimensão espiritual se presente",
+      "Verificou alinhamento da decisão com valores",
+      "Perguntou o que dá sentido atravessar isso"
+    ],
+    caminhos: ["Orientação preventiva", "Mediação"],
+    peso: { judicial: 0, arbitragem: 0, negociacao: 1, mediacao: 2, conciliacao: 0, orientacao: 3 }
+  }
+];
+
+const CAMINHOS = [
+  { key: "negociacao", label: "Negociação direta" },
+  { key: "mediacao", label: "Mediação" },
+  { key: "conciliacao", label: "Conciliação" },
+  { key: "arbitragem", label: "Arbitragem" },
+  { key: "judicial", label: "Ação judicial" },
+  { key: "orientacao", label: "Orientação preventiva" }
+];
+
+const CAMINHO_DESC = {
+  negociacao: "As portas ativadas indicam que há vínculo entre as partes e disposição para diálogo direto. A negociação direta preserva a relação e pode ser mais eficiente.",
+  mediacao: "O perfil emocional e relacional do caso aponta para mediação, onde um terceiro neutro facilita o diálogo sem impor decisões.",
+  conciliacao: "O desequilíbrio de poder ou a natureza do conflito sugere a conciliação como caminho, com um conciliador que pode propor soluções.",
+  arbitragem: "A complexidade técnica e a natureza dos fatos indicam arbitragem como alternativa ao Judiciário, com maior especialização e celeridade.",
+  judicial: "Os elementos técnicos, riscos e natureza do conflito apontam para a via judicial como caminho mais adequado à proteção dos direitos do cliente.",
+  orientacao: "O momento atual não é propício para ação imediata. A orientação preventiva protege o cliente e prepara terreno para decisão futura mais segura."
+};
+
+let scores = {};
+PORTAS.forEach(p => scores[p.num] = 0);
+
+
+function updateFiltro() {
+  const checks = document.querySelectorAll('.filtro-check');
+  const all = Array.from(checks).every(c => c.checked);
+  document.getElementById('filtroAlert').style.display = all ? 'flex' : 'none';
+}
+
+function renderPortas() {
+  const grid = document.getElementById('portasGrid');
+  grid.innerHTML = '';
+  PORTAS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'porta-card';
+    card.id = `porta-card-${p.num}`;
+    card.innerHTML = `
+      <div class="porta-header">
+        <div class="porta-num" id="porta-num-${p.num}">${p.num}</div>
+        <div class="porta-info">
+          <div class="porta-name">${p.nome}</div>
+          <div class="porta-desc">${p.desc}</div>
+        </div>
+        <div class="porta-score" id="porta-score-${p.num}">0 / ${p.itens.length}</div>
+      </div>
+      <div class="porta-items">
+        ${p.itens.map((item, i) => `
+          <label class="check-item">
+            <input type="checkbox" data-porta="${p.num}" data-idx="${i}" onchange="onCheck()">
+            <div class="check-box"></div>
+            <span class="check-text">${item}</span>
+          </label>
+        `).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function renderBars() {
+  const bars = document.getElementById('portaBars');
+  bars.innerHTML = PORTAS.map(p => `
+    <div class="porta-bar-item" id="bar-item-${p.num}">
+      <div class="porta-bar-name">${p.nome.replace('Porta ', '')}</div>
+      <div class="porta-bar-track">
+        <div class="porta-bar-fill" id="bar-fill-${p.num}" style="width:0%"></div>
+      </div>
+      <div class="porta-bar-pct" id="bar-pct-${p.num}">0%</div>
+    </div>
+  `).join('');
+}
+
+function renderCaminhos() {
+  const grid = document.getElementById('caminhosGrid');
+  grid.innerHTML = CAMINHOS.map(c => `
+    <div class="caminho-opt" id="caminho-${c.key}">${c.label}</div>
+  `).join('');
+}
+
+function onCheck() {
+  scores = {};
+  PORTAS.forEach(p => {
+    const checked = document.querySelectorAll(`input[data-porta="${p.num}"]:checked`).length;
+    scores[p.num] = checked;
+    document.getElementById(`porta-score-${p.num}`).innerHTML = `<span>${checked}</span> / ${p.itens.length}`;
+    const card = document.getElementById(`porta-card-${p.num}`);
+    card.classList.toggle('activated', checked === p.itens.length);
+  });
+  updateProgress();
+  updateBars();
+  updateCaminho();
+}
+
+function updateProgress() {
+  const total = PORTAS.reduce((s, p) => s + p.itens.length, 0);
+  const checked = PORTAS.reduce((s, p) => s + scores[p.num], 0);
+  const pct = Math.round((checked / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function updateBars() {
+  const maxItems = 4;
+  const topNums = [];
+
+  PORTAS.forEach(p => {
+    const pct = Math.round((scores[p.num] / p.itens.length) * 100);
+    const fill = document.getElementById(`bar-fill-${p.num}`);
+    fill.style.width = pct + '%';
+    document.getElementById(`bar-pct-${p.num}`).textContent = pct + '%';
+    if (scores[p.num] > 0) topNums.push({ num: p.num, pct });
+  });
+
+  topNums.sort((a, b) => b.pct - a.pct);
+  const topSet = new Set(topNums.slice(0, 3).filter(t => t.pct > 0).map(t => t.num));
+
+  PORTAS.forEach(p => {
+    const item = document.getElementById(`bar-item-${p.num}`);
+    const fill = document.getElementById(`bar-fill-${p.num}`);
+    const isTop = topSet.has(p.num);
+    item.classList.toggle('top', isTop);
+    fill.classList.toggle('top', isTop);
+  });
+}
+
+function updateCaminho() {
+  const totalChecked = PORTAS.reduce((s, p) => s + scores[p.num], 0);
+
+  if (totalChecked === 0) {
+    document.getElementById('caminhoResult').textContent = '—';
+    document.getElementById('caminhoReason').textContent = 'Complete o checklist para obter a recomendação de caminho.';
+    CAMINHOS.forEach(c => document.getElementById(`caminho-${c.key}`).classList.remove('recommended'));
+    return;
+  }
+
+  const caminhoScores = {};
+  CAMINHOS.forEach(c => caminhoScores[c.key] = 0);
+
+  PORTAS.forEach(p => {
+    const ratio = scores[p.num] / p.itens.length;
+    if (ratio === 0) return;
+    Object.entries(p.peso).forEach(([k, v]) => {
+      caminhoScores[k] += v * ratio;
+    });
+  });
+
+  const sorted = Object.entries(caminhoScores).sort((a, b) => b[1] - a[1]);
+  const topKey = sorted[0][0];
+  const topScore = sorted[0][1];
+
+  CAMINHOS.forEach(c => {
+    const el = document.getElementById(`caminho-${c.key}`);
+    el.classList.toggle('recommended', c.key === topKey && topScore > 0);
+  });
+
+  const caminho = CAMINHOS.find(c => c.key === topKey);
+  document.getElementById('caminhoResult').textContent = topScore > 0 ? caminho.label : '—';
+  document.getElementById('caminhoReason').textContent = topScore > 0 ? CAMINHO_DESC[topKey] : 'Continue preenchendo para refinar a análise.';
+}
+
+function resetAll() {
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.getElementById('filtroAlert').style.display = 'none';
+  document.querySelectorAll('input[type="text"]').forEach(inp => inp.value = '');
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  onCheck();
+}
+
+function setDate() {
+  const now = new Date();
+  const d = String(now.getDate()).padStart(2,'0');
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const y = now.getFullYear();
+  document.getElementById('dateField').placeholder = `${d}/${m}/${y}`;
+}
+
+renderPortas();
+renderBars();
+renderCaminhos();
+setDate();
+</script>
+</body>
+</html>
